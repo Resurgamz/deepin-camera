@@ -371,8 +371,6 @@ public slots:
      */
     void updateValidDevices();
 
-    void setShutterSoundEnabled(bool enabled);
-
 private slots:
     /**
     * @brief ReceiveMajorImage　处理视频帧 mips、wayland下使用
@@ -390,22 +388,19 @@ private slots:
     * @brief onReachMaxDelayedFrames　达到视频帧最大延迟
     */
     void onReachMaxDelayedFrames();
-
     /**
     * @brief flash　闪光
     */
     void flash();
 
-    void ensureShutterSoundKeepalive();
-    void playPendingShutterSound();
+    void startShutterSoundWarmup();
+    void onShutterSoundPlayingChanged();
     void onShutterSoundStatusChanged();
-    void onShutterSoundKeepaliveStatusChanged();
-    void onShutterSoundKeepalivePlayingChanged();
 
     /**
-     * @brief slotresolutionchanged　分辨率改变槽函数
-     * @param 分辨率字符串(如：1920*1080)
-     */
+    * @brief slotresolutionchanged　分辨率改变槽函数
+    * @param 分辨率字符串(如：1920*1080)
+    */
 
     void slotresolutionchanged(const QString &);
 
@@ -539,8 +534,7 @@ private:
     QString                    m_videoFormat;       //录制视频格式
 
     QSoundEffect               *m_takePicSound;     //拍照声音
-    QSoundEffect               *m_shutterSoundKeepalive;
-    bool                        m_shutterSoundEnabled = false;
+    bool                        m_shutterSoundWarming = false;
     bool                        m_shutterSoundPending = false;
     QString                    m_savePicFolder;     //图片文件夹路径
     QString                    m_saveVdFolder;      //视频文件夹路径
